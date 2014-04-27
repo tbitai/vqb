@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html ng-app="project">
     <head>
         <title>Virtual QB</title>
@@ -13,27 +8,73 @@ and open the template in the editor.
  
         <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular-resource.min.js"> </script>
+        --> 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular-route.min.js"></script>
-         -->    
+   
         <script src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
         <script src='https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js'></script>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Passion+One:400,900' rel='stylesheet' type='text/css'>
+        <style>
+            table{
+                margin-left:auto;
+                margin-right:auto;
+            }
+            td{
+                padding: 6px;
+            }
+            h1{
+                font-family: "Passion One"; font-weight: 900;
+                text-transform: uppercase;
+                font-size: 37px;
+            }
+            .lead{
+                font-family: "Lobster";
+                font-size: 19px;
+            }
+        </style>
     </head>
     <body>
-        <ul ng-controller="ListAndEditCtrl">
-            <li ng-repeat="cube in vqb.cubes" style="list-style-type: none;float:left;">
-                <span class="glyphicon glyphicon-chevron-left"
-                      style="vertical-align: middle;"
-                      ng-click="rotateLeft(cube)"></span>
-                <canvas width="60" height="60"
-                        style="background-color:{{cube.sides[cube.activeside].color}};
-                               vertical-align: middle;">    
-                </canvas>
-                <span class="glyphicon glyphicon-chevron-right"
-                      style="vertical-align: middle;"
-                      ng-click="rotateRight(cube)"></span>
-            </li>
-        </ul>
+        <div class="text-center">
+            <h1>Virtual QB</h1>
+            <p class="lead">Rotate the cubes, or draw on them!</p>
+            
+        </div>
+        <table ng-controller="ListAndEditCtrl">
+            <tr ng-repeat="cubeRow in vqb.cubes">
+                <td ng-repeat="cube in cubeRow">
+                    <canvas width="60" height="16"
+                            style="background-color: black;
+                                   -ms-transform: skew(-45deg,0deg); /* IE 9 */
+                                   -webkit-transform: skew(-45deg,0deg); /* Chrome, Safari, Opera */
+                                   transform: skew(-45deg,0deg);
+                                   display:block;
+                                   position: relative; left: 8px; // adjust bottom side to the front face"></canvas>
+                    
+                    <div id="frontAndRightFaceContainer">
+                    <canvas width="60" height="60"
+                            style="background-color: {{vqb.bgcolors[cube.activeface]}};
+                                   float:left;"></canvas>
+                    <canvas height="60" width="16"
+                            style="background-color: {{vqb.bgcolors[faceToRight(cube.activeface)]}};
+                                   -ms-transform: skew(0deg,-45deg); /* IE 9 */
+                                   -webkit-transform: skew(0deg,-45deg); /* Chrome, Safari, Opera */
+                                   transform: skew(0deg,-45deg);
+                                   position: relative; top: -8px; // adjust left side to the front face"
+                            ng-click="rotateRight(cube)"></canvas>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="text-center">
+            <p>
+                A project by <a href="http://tbitai.github.io/">Tamás Bitai</a>.
+            </p>
+            <p><a href='http://szinesvaros.hu/index.php/en/projects/item/11-bp-v-erzsebet-ter'>QB</a>
+                was a funny thing at Erzsébet Square, Budapest.
+            </p>
+        </div>
         <script>
             angular.module('project', ['firebase'])
  
@@ -51,19 +92,15 @@ and open the template in the editor.
   /// Firebase as well.
   VQB.$bind($scope,'vqb');
   
-  $scope.rotateLeft=function(c){
-      if (c.activeside==0)
-          c.activeside=3;
+  $scope.faceToRight=function(s){
+      if (s==3)
+          return 0;
       else
-          c.activeside--;
+          return s+1;     
   }
-   
   
   $scope.rotateRight=function(c){
-      if (c.activeside==3)
-          c.activeside=0;
-      else
-          c.activeside++;     
+      c.activeface = $scope.faceToRight(c.activeface);
   }
 })
         </script>
