@@ -45,23 +45,24 @@
             <tr ng-repeat="cubeRow in vqb.cubes">
                 <td ng-repeat="cube in cubeRow">
                     <canvas width="60" height="16"
-                            style="background-color: black;
+                            style="background-color: #333;
                                    -ms-transform: skew(-45deg,0deg); /* IE 9 */
                                    -webkit-transform: skew(-45deg,0deg); /* Chrome, Safari, Opera */
                                    transform: skew(-45deg,0deg);
                                    display:block;
-                                   position: relative; left: 8px; // adjust bottom side to the front face"></canvas>
+                                   position: relative; left: 8px; /* adjust bottom side to the front face */"></canvas>
                     
                     <div id="frontAndRightFaceContainer">
-                    <canvas width="60" height="60"
+                        <canvas width="60" height="60"
                             style="background-color: {{vqb.bgcolors[cube.activeface]}};
-                                   float:left;"></canvas>
-                    <canvas height="60" width="16"
+                                   float:left;"></canvas>    
+                        <canvas height="60" width="16"
                             style="background-color: {{vqb.bgcolors[faceToRight(cube.activeface)]}};
                                    -ms-transform: skew(0deg,-45deg); /* IE 9 */
                                    -webkit-transform: skew(0deg,-45deg); /* Chrome, Safari, Opera */
                                    transform: skew(0deg,-45deg);
-                                   position: relative; top: -8px; // adjust left side to the front face"
+                                   position: relative; top: -8px; /* adjust left side to the front face */
+                                   cursor:pointer;"
                             ng-click="rotateRight(cube)"></canvas>
                     </div>
                 </td>
