@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html ng-app="project">
+<html ng-app="VqbApp">
     <head>
         <title>Virtual QB</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 
+        <meta name="viewport" content="width=820, initial-scale=1.0">
+        -->
+        
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular.min.js"></script>
  
-        <!-- 
+        <!--
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular-resource.min.js"> </script>
-        --> 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular-route.min.js"></script>
+        -->
    
         <script src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
         <script src='https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js'></script>
@@ -77,7 +81,7 @@
             </p>
         </div>
         <script>
-            angular.module('project', ['firebase'])
+            angular.module('VqbApp', ['firebase'])
  
 .value('fbURL', 'https://vqb.firebaseio.com/')
  
