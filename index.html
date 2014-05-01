@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html ng-app="project">
+<html ng-app="VqbApp">
     <head>
         <title>Virtual QB</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 
+        <meta name="viewport" content="width=820, initial-scale=1.0">
+        -->
+        
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular.min.js"></script>
  
-        <!-- 
+        <!--
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular-resource.min.js"> </script>
-        --> 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular-route.min.js"></script>
+        -->
    
         <script src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
         <script src='https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js'></script>
@@ -53,9 +57,20 @@
                                    position: relative; left: 8px; /* adjust bottom side to the front face */"></canvas>
                     
                     <div id="frontAndRightFaceContainer">
-                        <canvas width="60" height="60"
+                        <svg width="60" height="60"
                             style="background-color: {{vqb.bgcolors[cube.activeface]}};
-                                   float:left;"></canvas>    
+                            float:left;
+                            cursor: crosshair;"
+                            ng-mousemove="drawLine(cube)"
+                            ng-init="mouseDown=0"
+                            ng-mousedown="mouseDown=1"
+                            ng-mouseup="mouseDown=0">
+                                <circle ng-repeat="point in cube.faces[cube.activeface].points"
+                                        cx="{{point.x}}"
+                                        cy="{{point.y}}"
+                                        r="1"
+                                        fill="{{point.color}}" />                                        
+                        </svg>                        
                         <canvas height="60" width="16"
                             style="background-color: {{vqb.bgcolors[faceToRight(cube.activeface)]}};
                                    -ms-transform: skew(0deg,-45deg); /* IE 9 */
@@ -77,7 +92,7 @@
             </p>
         </div>
         <script>
-            angular.module('project', ['firebase'])
+            angular.module('VqbApp', ['firebase'])
  
 .value('fbURL', 'https://vqb.firebaseio.com/')
  
@@ -102,6 +117,16 @@
   
   $scope.rotateRight=function(c){
       c.activeface = $scope.faceToRight(c.activeface);
+  }
+
+  $scope.drawLine=function(c){
+      // This must be corrected
+      
+      if (!$scope.mouseDown) return;
+
+      $event.preventDefault();
+      
+      c.faces[c.activeface].points.push({"x":$event.pageX, "y":$event.pageY, "color":"#333"});
   }
 })
         </script>
