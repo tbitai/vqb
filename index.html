@@ -61,16 +61,16 @@
                             style="background-color: {{vqb.bgcolors[cube.activeface]}};
                             float:left;
                             cursor: crosshair;"
-                            ng-mousemove="drawLine(cube)"
                             ng-init="mouseDown=0"
                             ng-mousedown="mouseDown=1"
-                            ng-mouseup="mouseDown=0">
+                            ng-mouseup="mouseDown=0"
+                            ng-mousemove="drawPoint(cube,$event,mouseDown)">
                                 <circle ng-repeat="point in cube.faces[cube.activeface].points"
                                         cx="{{point.x}}"
                                         cy="{{point.y}}"
                                         r="1"
                                         fill="{{point.color}}" />                                        
-                        </svg>                        
+                        </svg>
                         <canvas height="60" width="16"
                             style="background-color: {{vqb.bgcolors[faceToRight(cube.activeface)]}};
                                    -ms-transform: skew(0deg,-45deg); /* IE 9 */
@@ -119,14 +119,17 @@
       c.activeface = $scope.faceToRight(c.activeface);
   }
 
-  $scope.drawLine=function(c){
-      // This must be corrected
+  $scope.drawPoint=function(c,e,m){
       
-      if (!$scope.mouseDown) return;
-
-      $event.preventDefault();
+      if (!m) return;
       
-      c.faces[c.activeface].points.push({"x":$event.pageX, "y":$event.pageY, "color":"#333"});
+      e.preventDefault();
+      
+      // Create points array if it doesn't exist
+      if (c.faces[c.activeface].points===undefined)
+          c.faces[c.activeface].points=[];
+      
+      c.faces[c.activeface].points.push({"x":e.offsetX, "y":e.offsetY, "color":"#333"});
   }
 })
         </script>
