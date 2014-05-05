@@ -58,13 +58,13 @@
                     
                     <div id="frontAndRightFaceContainer">
                         <svg width="60" height="60"
-                            style="background-color: {{vqb.bgcolors[cube.activeface]}};
-                            float:left;
+                            style="float:left;
                             cursor: crosshair;"
                             ng-init="mouseDown=0"
                             ng-mousedown="mouseDown=1"
                             ng-mouseup="mouseDown=0"
                             ng-mousemove="drawPoint(cube,$event,mouseDown)">
+                        <rect x="0" y="0" width="60" height="60" fill="{{vqb.bgcolors[cube.activeface]}}"></rect>
                                 <circle ng-repeat="point in cube.faces[cube.activeface].points"
                                         cx="{{point.x}}"
                                         cy="{{point.y}}"
