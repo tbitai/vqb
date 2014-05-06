@@ -37,13 +37,38 @@
                 font-family: "Lobster";
                 font-size: 19px;
             }
+            .fb-like{
+                float:right;
+                position:absolute;
+                top:20px;
+                right:40px;
+            }
         </style>
     </head>
     <body>
-        <div class="text-center">
+        <div id="fb-root"></div>
+        <script>
+                (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+                
+        <div class="fb-like "
+             data-href="http://tbitai.github.io/vqb/"
+             data-width="120"
+             data-layout="box_count"
+             data-action="like"
+             data-show-faces="true"
+             data-share="true">
+        </div>
+        <div class="container">        
+        <div class="text-center">            
             <h1>Virtual QB</h1>
             <p class="lead">Rotate the cubes, or draw on them!</p>
-            
         </div>
         <table ng-controller="ListAndEditCtrl">
             <tr ng-repeat="cubeRow in vqb.cubes">
@@ -90,6 +115,7 @@
             <p><a href='http://szinesvaros.hu/index.php/en/projects/item/11-bp-v-erzsebet-ter'>QB</a>
                 was a funny thing at Erzsébet Square, Budapest.
             </p>
+        </div>
         </div>
         <script>
             angular.module('VqbApp', ['firebase'])
