@@ -101,12 +101,12 @@
                                      ng-mousedown="mouseDown=1"
                                      ng-mouseup="mouseDown=0"
                                      ng-mousemove="drawPoint(cube,$event,mouseDown)">
-                                <rect x="0" y="0" width="60" height="60" fill="{{vqb.bgcolors[cube.activeface]}}"></rect>
+                                <rect x="0" y="0" width="60" height="60" ng-attr-fill="{{vqb.bgcolors[cube.activeface]}}"></rect>
                                 <circle ng-repeat="point in cube.faces[cube.activeface].points"
-                                        cx="{{point.x}}"
-                                        cy="{{point.y}}"
+                                        ng-attr-cx="{{point.x}}"
+                                        ng-attr-cy="{{point.y}}"
                                         r="1"
-                                        fill="{{point.color}}" />                                        
+                                        ng-attr-fill="{{point.color}}" />                                        
                                 </svg>
                                 <canvas height="60" width="16"
                                         style="background-color: {{vqb.bgcolors[faceToRight(cube.activeface)]}};
