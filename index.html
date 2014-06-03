@@ -24,6 +24,9 @@
    
         <script src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
         <script src='https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js'></script>
+        
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Passion+One:400,900' rel='stylesheet' type='text/css'>
@@ -138,7 +141,7 @@
 .factory('VQB', function($firebase, fbURL) {
   return $firebase(new Firebase(fbURL));
 })
-
+    
  
 .controller('ListAndEditCtrl', function($scope, VQB) {
   //$scope.vqb = VQB;
@@ -167,6 +170,13 @@
       // Create points array if it doesn't exist
       if (c.faces[c.activeface].points===undefined)
           c.faces[c.activeface].points=[];
+      
+      // Define offsetX and offsetY for Firefox
+      if(typeof e.offsetX === "undefined" || typeof e.offsetY === "undefined") {
+        var targetOffset = $(e.target).offset();
+        e.offsetX = e.pageX - targetOffset.left;
+        e.offsetY = e.pageY - targetOffset.top;
+      }
       
       c.faces[c.activeface].points.push({"x":e.offsetX, "y":e.offsetY, "color":"#333"});
   }
