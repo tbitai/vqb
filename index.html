@@ -100,15 +100,17 @@
                                 <svg width="60" height="60"
                                      style="float:left;
                             cursor: crosshair;"
-                                     ng-init="mouseDown=0"
-                                     ng-mousedown="mouseDown=1"
-                                     ng-mouseup="mouseDown=0"
-                                     ng-mousemove="drawPoint(cube,$event,mouseDown)">
+                                     ng-init="drawingInit()"
+                                     ng-mousedown="drawingMouseDownHandler(cube,$event)"
+                                     ng-mouseup="drawingMouseUpAndMouseLeaveHandler()"
+                                     ng-mouseleave="drawingMouseUpAndMouseLeaveHandler()"
+                                     ng-mousemove="drawPoint(cube,$event,mouseDown,lastPoint)">
                                 <rect x="0" y="0" width="60" height="60" ng-attr-fill="{{vqb.bgcolors[cube.activeface]}}"></rect>
-                                <circle ng-repeat="point in cube.faces[cube.activeface].points"
-                                        ng-attr-cx="{{point.x}}"
-                                        ng-attr-cy="{{point.y}}"
-                                        r="1"
+                                <rect ng-repeat="point in cube.faces[cube.activeface].points"
+                                        ng-attr-x="{{point.x}}"
+                                        ng-attr-y="{{point.y}}"
+                                        width="1"
+                                        height="1"
                                         ng-attr-fill="{{point.color}}" />                                        
                                 </svg>
                                 <canvas height="60" width="16"
@@ -161,7 +163,22 @@
       c.activeface = $scope.faceToRight(c.activeface);
   }
 
-  $scope.drawPoint=function(c,e,m){
+  $scope.drawingInit = function(){
+      $scope.mouseDown=0;
+      $scope.lastPoint=null;
+  }
+  
+  $scope.drawingMouseDownHandler = function(c,e){
+      $scope.mouseDown=1;
+      $scope.drawPoint(c,e,$scope.mouseDown,$scope.lastPoint);
+  }
+  
+  $scope.drawingMouseUpAndMouseLeaveHandler = function(){
+      $scope.mouseDown=0;
+      $scope.lastPoint=null;
+  }
+  
+  $scope.drawPoint=function(c,e,m,l){
       
       if (!m) return;
       
@@ -178,7 +195,28 @@
         e.offsetY = e.pageY - targetOffset.top;
       }
       
-      c.faces[c.activeface].points.push({"x":e.offsetX, "y":e.offsetY, "color":"#333"});
+      // Bresenham's line algorithm
+      // (Idea and code stolen from the Firebase tutorial's Drawing Example.)
+      var x1 = e.offsetX;
+      var y1 = e.offsetY;
+      var x0 = (l == null) ? x1 : l[0];
+      var y0 = (l == null) ? y1 : l[1];
+      var dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
+      var sx = (x0 < x1) ? 1 : -1, sy = (y0 < y1) ? 1 : -1, err = dx - dy;
+      while (true) {
+        c.faces[c.activeface].points.push({"x":x0, "y":y0, "color":"#333"});
+        if (x0 == x1 && y0 == y1) break;
+        var e2 = 2 * err;
+        if (e2 > -dy) {
+          err = err - dy;
+          x0 = x0 + sx;
+        }
+        if (e2 < dx) {
+          err = err + dx;
+          y0 = y0 + sy;
+        }
+      }
+      l = [x1, y1];
   }
 })
         </script>
