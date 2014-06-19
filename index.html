@@ -104,7 +104,7 @@
                                      ng-mousedown="drawingMouseDownHandler(cube,$event)"
                                      ng-mouseup="drawingMouseUpAndMouseLeaveHandler()"
                                      ng-mouseleave="drawingMouseUpAndMouseLeaveHandler()"
-                                     ng-mousemove="drawPoint(cube,$event,mouseDown,lastPoint)">
+                                     ng-mousemove="drawLine(cube,$event,mouseDown,lastPoint)">
                                 <rect x="0" y="0" width="60" height="60" ng-attr-fill="{{vqb.bgcolors[cube.activeface]}}"></rect>
                                 <rect ng-repeat="point in cube.faces[cube.activeface].points"
                                         ng-attr-x="{{point.x}}"
@@ -170,7 +170,7 @@
   
   $scope.drawingMouseDownHandler = function(c,e){
       $scope.mouseDown=1;
-      $scope.drawPoint(c,e,$scope.mouseDown,$scope.lastPoint);
+      $scope.drawLine(c,e,$scope.mouseDown,$scope.lastPoint);
   }
   
   $scope.drawingMouseUpAndMouseLeaveHandler = function(){
@@ -178,7 +178,7 @@
       $scope.lastPoint=null;
   }
   
-  $scope.drawPoint=function(c,e,m,l){
+  $scope.drawLine=function(c,e,m,l){
       
       if (!m) return;
       
