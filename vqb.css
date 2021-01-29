@@ -1,0 +1,41 @@
+table{
+    margin-left:auto;
+    margin-right:auto;
+}
+td{
+    padding: 6px;
+}
+h1{
+    font-family: "Passion One"; font-weight: 900;
+    text-transform: uppercase;
+    font-size: 37px;
+}
+.lead{
+    font-family: "Lobster";
+    font-size: 19px;
+}
+.container {
+    width: 880px; /* (60 + 16 + 2 * 6) * 10 */
+}
+canvas.top-face {
+    -ms-transform: skew(-45deg, 0deg); /* IE 9 */
+    -webkit-transform: skew(-45deg, 0deg); /* Chrome, Safari, Opera */
+    transform: skew(-45deg, 0deg);
+
+    background-color: #333;
+    display: block;
+    position: relative;
+    left: 8px; /* adjust bottom side to the front face */
+}
+svg.front-face {
+    float:left;
+    cursor: crosshair;
+}
+canvas.right-face {
+    -ms-transform: skew(0deg,-45deg); /* IE 9 */
+    -webkit-transform: skew(0deg,-45deg); /* Chrome, Safari, Opera */
+    transform: skew(0deg,-45deg);
+
+    position: relative; top: -8px; /* adjust left side to the front face */
+    cursor:pointer;
+}
