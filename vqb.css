@@ -14,6 +14,19 @@ h1{
     font-family: "Lobster";
     font-size: 19px;
 }
+.toolbar {
+    padding-top: 20px;  /* h1 margin-top */
+}
+body.dark {
+    background-color: black;
+    color: navajowhite;
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.light) {
+        background-color: black;
+        color: navajowhite;
+    }
+}
 .container {
     width: 880px; /* (60 + 16 + 2 * 6) * 10 */
 }

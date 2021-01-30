@@ -19,12 +19,20 @@
         <link href='https://fonts.googleapis.com/css?family=Passion+One:400,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="vqb.css">
     </head>
-    <body>
+    <body ng-controller="BodyCtrl" ng-class="{dark: theme === 'dark', light: theme === 'light'}">
         <div class="container">
             <div class="row">
                 <div class="text-center col-xs-6 col-xs-offset-3">            
                     <h1>Virtual QB</h1>
                     <p class="lead">Rotate the cubes, or draw on them!</p>
+                </div>
+                <div class="col-xs-1 col-xs-offset-2 toolbar">
+                    <button type="button" class="btn btn-link"
+                            aria-label="Light/dark theme"
+                            title="Light/dark theme"
+                            ng-click="theme = theme === 'dark' ? 'light' : 'dark'">
+                        <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
             <div class="row">

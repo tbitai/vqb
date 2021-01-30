@@ -6,7 +6,9 @@ angular.module('VqbApp', ['firebase'])
   return $firebase(new Firebase(fbURL));
 })
 
-
+.controller('BodyCtrl', function ($scope) {
+    $scope.theme = undefined;
+})
 .controller('ListAndEditCtrl', function($scope, VQB) {
   //$scope.vqb = VQB;
   /// We make a 3-way binding instead,
